@@ -1,12 +1,3 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 #navbar {
   display: flex;
   justify-content: space-between;
@@ -30,8 +21,9 @@
 }
 
 .links {
+  color: white;
   cursor: pointer;
-  transition: 0.2s;
+  transition: color 0.2s;
 }
 
 .links:hover{
@@ -66,18 +58,12 @@
   font-family: 'Exo 2', sans-serif;
 }
 
+.menu-icon {
+  display: none;
+}
 
-#menu-icon {
-  display: none;
-}
-.mobile-menu{
-  display: none;
-}
 
 @media (max-width: 768px) {
-  .nav-list {
-    visibility: hidden;
-  }
 
   .menu-icon {
     font-size: 25px;
@@ -89,26 +75,36 @@
     color: red;
   }
 
-  .mobile-menu{
-    display: none;
-  }
-
-  .mobile-menu.active{
-    font-family: 'Exo 2', sans-serif;
+  .nav-list{
     position: fixed;
-    top:70px;
+    top:72px;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: #1b1b1b;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     z-index: 999;
-    gap: 30px;
     font-size: 40px;
+    gap: 50px;
+  }
 
+  .nav-list.active{
+    display: flex;
+  }
+
+  .links{
+    margin-top: 260px;
+    font-size: 50px;
+  }
+  .icon {
+    padding: 10px 10px;
+    font-size: 40px;
+  }
+  .input-field {
+    font-size: 30px;
   }
 }
 

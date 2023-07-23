@@ -7,37 +7,41 @@ import { FaBars } from 'react-icons/fa'
 
 function Navbar() {
     const [mobileMenuState, setMobileMenuState] = useState(false)
+    const [input, setInput] = useState("")
+
     const navigate = useNavigate()
 
     const toggleMobileMenu = () => {
         setMobileMenuState(!mobileMenuState)
     };
 
+    const handleLinkClick = (url: string) => {
+        navigate(url)
+        setMobileMenuState(!mobileMenuState)
+
+    }
+
+
+
+    const handleSearchButton = () => {
+        handleLinkClick("/results?:title")
+    }
+
     return (
         <nav id="navbar">
-            <img onClick={() => navigate("/home")} className='logo' src={logo} alt='logo' />
-            <div className='nav-list' >
-                <span className='links' onClick={() => navigate("/collections")}>Collections</span>
+            <img onClick={() => handleLinkClick("/home")} className='logo' src={logo} alt='logo' />
+            <div className={`nav-list ${mobileMenuState ? "active" : ""}`} >
+                <span className='links' onClick={() => handleLinkClick("/collections")}>Collections</span>
                 <div className="searchbar">
-                    <FiSearch className='icon' />
+                    <FiSearch className='icon' onClick={handleSearchButton} />
                     <input
+                        onChange={(event) => setInput(event.target.value)}
                         className='input-field'
                         type="text"
                         placeholder="Search" />
                 </div>
             </div>
             <FaBars className={`menu-icon ${mobileMenuState ? "active" : ""}`} onClick={toggleMobileMenu} />
-            <div className={`mobile-menu ${mobileMenuState ? "active" : ""}`} >
-                <span className='links' onClick={() => navigate("/home")}>Home</span>
-                <span className='links' onClick={() => navigate("/collections")}>Collections</span>
-                <div className="searchbar">
-                    <FiSearch className='icon' />
-                    <input
-                        className='input-field'
-                        type="text"
-                        placeholder="Search" />
-                </div>
-            </div>
         </nav>
     )
 }
