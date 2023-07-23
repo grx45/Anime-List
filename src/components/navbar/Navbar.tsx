@@ -18,10 +18,7 @@ function Navbar() {
     const handleLinkClick = (url: string) => {
         navigate(url)
         setMobileMenuState(!mobileMenuState)
-
     }
-
-
 
     const handleSearchButton = () => {
         handleLinkClick("/results?:title")
