@@ -4,6 +4,7 @@ import { Route, Routes, Navigate } from 'react-router-dom'
 import Home from './pages/home/Home';
 import NotFound from './pages/notfound/NotFound';
 import MediaPage from './pages/mediapage/MediaPage';
+import Navbar from './components/navbar/Navbar'
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
 
   return (
     <>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
