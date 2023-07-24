@@ -27,9 +27,6 @@ function Home() {
 
         if (error) return <p>Error: {error.message}</p>;
 
-        console.log("asdads", pageInfo)
-
-
         return media.map((val: Media) => {
             return (
                 <VerticalRectangle key={val.id} large={val?.coverImage?.large} episodes={val?.episodes} english={val?.title?.english} romaji={val?.title?.romaji} />
