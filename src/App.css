@@ -80,6 +80,7 @@ body{
 }
 
 .headers{
+  width: 100%;
   text-decoration: underline;
   text-decoration-color: red;
   text-decoration-thickness: 2px;
@@ -99,8 +100,8 @@ body{
 
 .card-container{
   border-radius: 5px;
-  width: 225px;
-  height:330px;
+  width: 243px;
+  height:380px;
   position: relative;
 }
 
@@ -132,6 +133,44 @@ body{
   font-size: 10px;
 }
 
+.pagination-container{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.pagination {
+  list-style: none;
+  display: flex;
+  margin-top: 1rem;
+  margin-bottom: 5rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  gap: 5px;
+}
+.pagination .break {
+  cursor: pointer;
+}
+
+.pagination .page-num{
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+  color: white;
+  
+}
+
+.pagination .page-num:hover{
+  transition: background-color 0.2s;
+  background-color: red;
+  color: black;
+}
+
+.pagination .active{
+  background-color: red;
+  color: black;
+}
 
 .skeleton{
   animation: skeleton-loading 0.5s linear infinite alternate;
@@ -145,6 +184,8 @@ body{
     background-color: hsl(200, 20%, 95%);
   }
 }
+
+
 
 @media (max-width: 768px) {
 
@@ -194,7 +235,7 @@ body{
   }
   .card-container{
     border-radius: 5px;
-    max-width: 170px;
+    max-width: 180px;
     height:350px;
     position: relative;
   }
@@ -205,4 +246,14 @@ body{
     font-weight: 300;
     font-size: 9px;
   }
+  .pagination {
+    font-size: 0.825rem;
+    line-height: 1.25rem;
+    margin-left: -25px;
+  }
+
+  .pagination .page-num {
+    padding: 6px 12px;
+  }
+  
 }

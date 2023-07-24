@@ -27,12 +27,12 @@ interface PageData {
   media: Media[];
 }
 
-export const FetchSeasonalAnime = (page: number) => {
+export const FetchSeasonalAnime = (page: number, items: number) => {
   const { season, year } = findSeason()
 
   const GET_SEASONAL = gql`
-    query GetSeasonal($season:MediaSeason!, $year:Int!, $page:Int!) {
-        Page(page:$page,perPage:10,){
+    query GetSeasonal($season:MediaSeason!, $year:Int!, $page:Int!,$perPage:Int!) {
+        Page(page:$page,perPage:$perPage,){
             pageInfo {
               total
               perPage
@@ -56,7 +56,7 @@ export const FetchSeasonalAnime = (page: number) => {
   `;
 
   const { loading, error, data, refetch } = useQuery(GET_SEASONAL, {
-    variables: { season: season.toUpperCase(), year, page }
+    variables: { season: season.toUpperCase(), year, page, perPage: items }
   })
 
 
