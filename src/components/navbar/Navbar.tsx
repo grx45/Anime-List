@@ -6,39 +6,39 @@ import { FiSearch } from 'react-icons/fi'
 import { FaBars } from 'react-icons/fa'
 
 function Navbar() {
-    const [mobileMenuState, setMobileMenuState] = useState(false)
-    const [input, setInput] = useState("")
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [searchQuery, setSearchQuery] = useState<string>("")
 
     const navigate = useNavigate()
 
     const toggleMobileMenu = () => {
-        setMobileMenuState(!mobileMenuState)
+        setMobileMenuOpen(!mobileMenuOpen)
     };
 
-    const handleLinkClick = (url: string) => {
+    const handleNavigation = (url: string) => {
         navigate(url)
-        setMobileMenuState(!mobileMenuState)
+        toggleMobileMenu();
     }
 
-    const handleSearchButton = () => {
-        handleLinkClick("/results?:title")
+    const handleSearchSubmit = () => {
+        // code for searchbar function
     }
 
     return (
         <nav id="navbar">
-            <img onClick={() => handleLinkClick("/home")} className='logo' src={logo} alt='logo' />
-            <div className={`nav-list ${mobileMenuState ? "active" : ""}`} >
-                <span className='links' onClick={() => handleLinkClick("/collections")}>Collections</span>
+            <img onClick={() => handleNavigation("/home")} className='logo' src={logo} alt='logo' />
+            <div className={`nav-list ${mobileMenuOpen ? "active" : ""}`} >
+                <span className='links' onClick={() => handleNavigation("/collections")}>Collections</span>
                 <div className="searchbar">
-                    <FiSearch className='icon' onClick={handleSearchButton} />
+                    <FiSearch className='icon' onClick={handleSearchSubmit} />
                     <input
-                        onChange={(event) => setInput(event.target.value)}
+                        onChange={(event) => setSearchQuery(event.target.value)}
                         className='input-field'
                         type="text"
                         placeholder="Search" />
                 </div>
             </div>
-            <FaBars className={`menu-icon ${mobileMenuState ? "active" : ""}`} onClick={toggleMobileMenu} />
+            <FaBars className={`menu-icon ${mobileMenuOpen ? "active" : ""}`} onClick={toggleMobileMenu} />
         </nav>
     )
 }

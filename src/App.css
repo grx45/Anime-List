@@ -1,10 +1,21 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Exo 2', sans-serif;
+  background-color: #1b1b1b;
+  color: white;
+}
+
+
+
 #navbar {
+  height: 4vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  background-color: #1b1b1b;
   color: #fff;
+  background-color: #0f0e0e;
 }
 .logo{
   max-width: 150px;
@@ -17,7 +28,7 @@
   align-items: center;
   justify-content: center;
   gap: 20px;
-  font-family: 'Exo 2', sans-serif;
+  
 }
 
 .links {
@@ -62,6 +73,78 @@
   display: none;
 }
 
+.container{
+  padding: 0 15px;
+  max-width: 1280px;
+  margin: auto;
+}
+
+.headers{
+  text-decoration: underline;
+  text-decoration-color: red;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 10px;
+  margin-bottom: 40px;
+}
+
+.list-container{
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  justify-content: center;
+  row-gap: 15px;
+  flex-wrap: wrap;
+  column-gap: 15px;
+}
+
+.card-container{
+  border-radius: 5px;
+  width: 225px;
+  height:330px;
+  position: relative;
+}
+
+.cover{
+  border-radius: 5px;
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+  z-index: -100;
+  cursor: pointer;
+}
+.cover:hover{
+  transition: opacity 0.3s;
+  opacity: 0.6;
+}
+
+.title{
+  word-wrap: break-word;
+  font-size: medium;
+  cursor: pointer;
+  margin:5px 0 2px;
+  z-index: 999;
+}
+.title:hover{
+  color: red;
+}
+.episodes{
+  font-weight: 300;
+  font-size: 10px;
+}
+
+
+.skeleton{
+  animation: skeleton-loading 0.5s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
 
 @media (max-width: 768px) {
 
@@ -76,13 +159,13 @@
   }
 
   .nav-list{
+    transition: 0.5s;
     position: fixed;
-    top:72px;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 68px;
+    left: -100%;
+    width: 100vw;
+    height: 96vh;
     background-color: #1b1b1b;
-    display: none;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -92,6 +175,9 @@
   }
 
   .nav-list.active{
+    transition: 0.5s;
+    
+    left: 0;
     display: flex;
   }
 
@@ -106,5 +192,17 @@
   .input-field {
     font-size: 30px;
   }
+  .card-container{
+    border-radius: 5px;
+    max-width: 170px;
+    height:350px;
+    position: relative;
+  }
+  .title{
+    font-size: 10px;
+  }
+  .episodes{
+    font-weight: 300;
+    font-size: 9px;
+  }
 }
-

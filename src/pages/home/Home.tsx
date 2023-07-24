@@ -1,58 +1,54 @@
-import { useQuery, gql } from "@apollo/client";
 import { useNavigate } from 'react-router-dom'
+import { findSeason } from "../../helpers/useFindSeason";
+import { FetchSeasonalAnime, Media } from "../../hooks/useFetchSeasonalAnime";
+import VerticalRectangle from '../../components/cards/VerticalRectangle';
+import VerticalRectangleSkeleton from '../../components/skeleton/VerticalRectangleSkeleton';
+import { useState } from 'react'
+
+
 
 function Home() {
-
     const navigate = useNavigate()
+    const { season, year } = findSeason()
 
-    interface Media {
-        id: number;
-        title: {
-            romaji: string;
-            english: string;
-            native: string;
-        };
-    }
+    const [currentPage, setCurrentPage] = useState(1)
 
-    interface QueryData {
-        Media: Media;
-    }
+    function SeasonalAnime() {
+        const { loading, error, data, refetch } = FetchSeasonalAnime(currentPage);
 
-    const GET_LOCATIONS = gql`
-    query GetLocations {
-      Media(id: 30013) {
-        id
-        title {
-          romaji
-          english
-          native
+        if (loading) {
+            const skeletonArray = Array.from({ length: 10 }, (_, index) => (
+                <VerticalRectangleSkeleton key={index} />
+            ));
+            return <div className='list-container' > {skeletonArray}</div >;
         }
-      }
-    }
-  `;
 
-    function DisplayData() {
-        const { loading, error, data } = useQuery<QueryData>(GET_LOCATIONS);
-
-        if (loading) return <p>Loading...</p>;
         if (error) return <p>Error: {error.message}</p>;
 
-        const anime: Media | undefined = data?.Media;
+        console.log("asdads", data)
+        const { Page: { media } } = data;
 
         return (
-            <div>
-                <h3>Id:{anime?.id}</h3>
-                <h3>Title (eng): {anime?.title?.english}</h3>
-                <h3>Title (rom): {anime?.title?.romaji}</h3>
-                <h3>Title (native): {anime?.title?.native}</h3>
-                <h1 onClick={() => navigate(`/mediapage/${anime?.title?.english}`)}>click here ... </h1>
-            </div>
-        );
+            <>
+                <div className='list-container'>
+                    {
+                        media.map((val: Media) => {
+                            return (
+                                <VerticalRectangle key={val.id} large={val?.coverImage?.large} episodes={val?.episodes} english={val?.title?.english} romaji={val?.title?.romaji} />
+                            )
+                        })
+
+                    }
+                </div>
+                <div>Pagination component put here</div>
+            </>
+        )
     }
 
     return (
         <div>
-            <DisplayData />
+            <h3 className="headers">{season} {year} Anime</h3>
+            <SeasonalAnime />
         </div>
     );
 }

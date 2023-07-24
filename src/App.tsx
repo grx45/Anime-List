@@ -13,12 +13,15 @@ function App() {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/mediapage/:title" element={<MediaPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <div className="container">
+
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/mediapage/:title" element={<MediaPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
     </>
   );
 }
