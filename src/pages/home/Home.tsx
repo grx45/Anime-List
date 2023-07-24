@@ -5,8 +5,6 @@ import VerticalRectangle from '../../components/cards/VerticalRectangle';
 import VerticalRectangleSkeleton from '../../components/skeleton/VerticalRectangleSkeleton';
 import { useState } from 'react'
 
-
-
 function Home() {
     const navigate = useNavigate()
     const { season, year } = findSeason()
