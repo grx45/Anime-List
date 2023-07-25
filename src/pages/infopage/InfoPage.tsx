@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 
-function MediaPage() {
+function InfoPage() {
     const params = useParams()
 
     console.log("dari parameters:", params)
@@ -10,4 +10,4 @@ function MediaPage() {
     );
 }
 
-export default MediaPage;
+export default InfoPage;

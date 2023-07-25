@@ -6,7 +6,6 @@ interface PaginationProps {
     totalData: number;
 }
 
-
 function Pagination({ handlePageChange, size, totalData }: PaginationProps) {
     const pageCount = Math.ceil(totalData / size);
 

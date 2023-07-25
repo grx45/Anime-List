@@ -164,12 +164,10 @@ body{
 .pagination .page-num:hover{
   transition: background-color 0.2s;
   background-color: red;
-  color: black;
 }
 
 .pagination .active{
   background-color: red;
-  color: black;
 }
 
 .skeleton{

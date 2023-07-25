@@ -1,18 +1,17 @@
-import { useNavigate } from 'react-router-dom'
 import { findSeason } from "../../helpers/useFindSeason";
 import { FetchSeasonalAnime, Media } from "../../hooks/useFetchSeasonalAnime";
 import VerticalRectangle from '../../components/cards/VerticalRectangle';
 import VerticalRectangleSkeleton from '../../components/skeleton/VerticalRectangleSkeleton';
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import Pagination from '../../components/pagination/Pagination';
-
-
+import { usePagination } from '../../helpers/usePagination';
 
 function Home() {
-    const navigate = useNavigate()
+
     const { season, year } = findSeason()
     const itemsPerPage = 10
-    const [currentPage, setCurrentPage] = useState<number>(1)
+    const { currentPage, handlePageChange } = usePagination()
+
     const { loading, error, data: SeasonalAnimeData, refetch } = FetchSeasonalAnime(currentPage, itemsPerPage);
     const media = SeasonalAnimeData?.Page?.media;
     const pageInfo = SeasonalAnimeData?.Page?.pageInfo;
@@ -32,10 +31,6 @@ function Home() {
                 <VerticalRectangle key={val.id} large={val?.coverImage?.large} episodes={val?.episodes} english={val?.title?.english} romaji={val?.title?.romaji} />
             )
         })
-    }
-
-    function handlePageChange(pageNumber: { selected: number }) {
-        setCurrentPage(pageNumber.selected + 1);
     }
 
     useEffect(() => {

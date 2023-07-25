@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom'
 
 import Home from './pages/home/Home';
 import NotFound from './pages/notfound/NotFound';
-import MediaPage from './pages/mediapage/MediaPage';
+import InfoPage from './pages/infopage/InfoPage';
 import Navbar from './components/navbar/Navbar'
 
 
@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/mediapage/:title" element={<MediaPage />} />
+          <Route path="/info/:title" element={<InfoPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
