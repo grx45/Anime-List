@@ -1,4 +1,4 @@
-import { convertToDate, checkDemographic, removeHTMLTag, changeDateFormat, ratingFormat } from "../helpers/AnimePageFunction";
+import { convertToDate, checkDemographic, changeDateFormat, ratingFormat } from "../helpers/AnimePageFunction";
 
 interface AnimeData {
     Media: {
@@ -30,18 +30,18 @@ export const setupAnimeData = (data:AnimeData) =>{
     const copyOfGenre = [...animeData?.genres];
     
     const id = animeData?.id
-    const episodes = animeData?.episodes
+    const episodes:number | string = animeData?.episodes || "-"
     const source = animeData?.source
     const status = animeData?.status
-    const studio = animeData?.studios?.nodes[0].name
+    const studio:string = animeData?.studios?.nodes[0]?.name || "NO_INFORMATION"
     const name = animeData?.title?.english || animeData?.title?.romaji
     const demographic: string | null = animeData?.tags?.find(checkDemographic)?.name || null
     const banner = animeData?.bannerImage || animeData?.coverImage?.extraLarge
-    const description = removeHTMLTag(animeData?.description)
+    const description = animeData?.description || "NO_DESCRIPTION_PROVIDED"
     const cover = animeData?.coverImage?.extraLarge
-    const lastUpdatedAt = convertToDate(animeData?.updatedAt)
+    const lastUpdatedAt = convertToDate(animeData?.updatedAt) || null
     const airingDate = changeDateFormat(animeData?.startDate?.day, animeData?.startDate?.month, animeData?.startDate?.year)
-    const score: number | null = ratingFormat(animeData?.averageScore)
+    const score: number | null = ratingFormat(animeData?.averageScore) || null
 
     if (demographic){ 
       copyOfGenre.push(demographic)
