@@ -39,7 +39,7 @@ function Home() {
     }, [currentPage])
 
     return (
-        <div>
+        <div className="container">
             <div className='list-container'>
                 <h3 className="headers">{season} {year} Anime</h3>
                 <SeasonalAnime />
