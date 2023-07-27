@@ -21,7 +21,6 @@
     align-items: flex-start;
     position: relative;
     z-index: 1 !important;
-    margin-bottom: 60px;
 }
 
 .image-container{
@@ -49,15 +48,17 @@
 }
 
 .info-section div p{
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 600;
     margin: 0;
 }
 
 .anime-heading{
     word-wrap: break-word;
-    font-size: 20px;
+    font-size: 35px;
     font-weight: 600;
+    margin-top: 5px;
+    margin-bottom: 15px;
 }
 
 .icon{
@@ -97,22 +98,6 @@ width: 100%;
 }
 
 
-.collection-button{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    padding: 5px;
-    border: 2px solid #381515;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.collection-button:hover{
-    background-color: #2e2d2d;
-}
-
 .mobile-section{
     display: none !important;
 }
@@ -149,14 +134,19 @@ width: 100%;
     .info-section div{
         margin-left: -8px;
     }
+
+    .info-section div p{
+        font-size: 15px;
+        font-weight: 600;
+        margin: 0;
+    }
+
     .big-media{
         display: none !important;
         flex-direction: column !important;
     }
 
-    .collection-button{
-        width: 95%;
-    }
+    
 
     .mobile-section{
         display: block !important;

@@ -1,34 +1,75 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { FetchSingleAnime } from "../../hooks/useFetchSingleAnime";
 import { setupAnimeData } from "../../utils/animeUtils";
 import { AiOutlineHome, AiOutlineClockCircle, AiFillStar, AiTwotoneCalendar } from 'react-icons/ai'
 import { CgStack } from 'react-icons/cg'
-import { BsPlus } from 'react-icons/bs'
+
 import "../../Animepage.css"
 import Tags from '../../components/tags/Tags'
 import { changeBack } from "../../helpers/AnimePageFunction";
+import CollectionAccordion from "../../components/accordion/CollectionAccordion";
+import NewCollectionModal from "../../components/modal/NewCollectionModal";
+import CollectionName from "../../components/modal/CollectionName"
 
 function InfoPage() {
+
 
     const params = useParams()
     const title = changeBack(params.title)
     const { loading, error, data } = FetchSingleAnime(title)
-    console.log(data)
     const { name, banner, description, cover, lastUpdatedAt, airingDate, score, id, episodes, source, status, studio, genres } = setupAnimeData(data)
 
     useEffect(() => {
         window.scrollTo(0, 0)
+        // addToCollection()
     }, [])
 
     function printGenres(): any {
-
         return genres?.map((val) => {
             return (
                 <Tags tag={val} />
             )
         })
     }
+    // function addToCollection(): any {
+
+    //     let x = [
+    //         {
+    //             CollectionName: "collection-1",
+    //             image: "default-image" || "ambil gambar content pertama",
+    //             content: [
+    //                 {
+    //                     name: "jujutsu",
+    //                     image: "asfwfawdawdadd"
+    //                 },
+    //                 {
+    //                     name: "chainsaw",
+    //                     image: "asfwfawdawdadd"
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             CollectionName: "collection-2",
+    //             image: "default-image" || "ambil gambar content pertama",
+    //             content: [
+    //                 {
+    //                     name: "jujutsu",
+    //                     image: "asfwfawdawdadd"
+    //                 },
+    //                 {
+    //                     name: "chainsaw",
+    //                     image: "asfwfawdawdadd"
+    //                 }
+    //             ]
+    //         },
+
+    //     ]
+
+    //     const jsonArray = JSON.stringify(x);
+    //     localStorage.setItem('collections', jsonArray)
+
+    // }
 
     return (
         <>
@@ -39,6 +80,8 @@ function InfoPage() {
                     <p>Error : {error.message}</p>
                 ) : (
                     <>
+                        <NewCollectionModal />
+                        <CollectionName />
                         <div className="banner-section" style={{ backgroundImage: `url(${banner})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "50% 0%" }}>
                             <div className="gradient-overlay"></div>
                         </div>
@@ -67,11 +110,13 @@ function InfoPage() {
                                 </div>
                                 <div>
                                     <CgStack className="icon" />
-                                    <p >{episodes} Episodes</p>
+                                    {
+                                        episodes == "-" ? (<p >{episodes}</p>) : (<p >{episodes} Episodes</p>)
+                                    }
                                 </div>
                                 <div>
                                     <CgStack className="icon" style={{ visibility: "hidden" }} />
-                                    <p style={{ position: "absolute", marginLeft: "10px" }}><span style={{ marginRight: "10px" }}>Original:</span>{source} </p>
+                                    <p style={{ position: "absolute", marginLeft: "10px" }}><span style={{ marginRight: "10px" }}>Source:</span>{source} </p>
                                 </div>
                                 <div className="big-media">
                                     <div className="genre-list">
@@ -82,34 +127,35 @@ function InfoPage() {
                                             <div className="description" dangerouslySetInnerHTML={{ __html: description }} />
                                         </div>
                                     )}
-                                    <div className="collection-button">
-                                        <BsPlus className="icon" />
-                                        Add to Collections
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="container" style={{ marginBottom: "60px" }}>
-                            Additional Info Pending
-                        </div>
+                        <CollectionAccordion title="Add to Collection" />
 
                         <div className="container mobile-section">
                             <div className="genre-list">
                                 {printGenres()}
                             </div>
-                            <div className="collection-button">
-                                <BsPlus className="icon" />
-                                Add to Collections
+                            {/* <div className="collection-container" >
+                                <div className="collection-button">
+                                    <BsPlus className="icon" />
+                                    Add to Collections
 
-                            </div>
+                                </div>
+
+                            </div> */}
                             {description && (
                                 <div className="description">
                                     <div dangerouslySetInnerHTML={{ __html: description }} />
                                 </div>
                             )}
                         </div>
+
+                        <div className="container" style={{ marginTop: "40px", marginBottom: "40px" }} >
+                            Additional Info Pending
+                        </div>
+
 
                     </>
                 )
