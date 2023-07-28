@@ -465,11 +465,8 @@ margin-right: 20px;
   opacity: 0.2;
 }
 
-
-
 .collection-card-container h2{
   text-align: center;
-  
   cursor: pointer;
   visibility: hidden;
   position: absolute;
