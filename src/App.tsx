@@ -6,19 +6,24 @@ import NotFound from './pages/notfound/NotFound';
 import InfoPage from './pages/infopage/InfoPage';
 import Navbar from './components/navbar/Navbar'
 
+import { ModalProvider } from './context/ModalContext';
+import { SubModalProvider } from './context/SubModalContext'
+
 
 function App() {
-
-
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/info/:title" element={<InfoPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <ModalProvider>
+        <SubModalProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/info/:title" element={<InfoPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </SubModalProvider>
+      </ModalProvider>
     </>
   );
 }

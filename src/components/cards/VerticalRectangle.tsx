@@ -13,16 +13,19 @@ type CardProps = {
 function VerticalRectangle({ large, episodes, english, romaji }: CardProps) {
     const navigate = useNavigate()
 
-    function handleLinkClick(url: string) {
-        let replacedString = url.replaceAll(" ", "%")
-        navigate(replacedString);
+    function handleLinkClick(url: string | undefined) {
+        if (!url) {
+            return null
+        }
+        let replacedString = encodeURIComponent(url)
+        navigate(`/info/${replacedString}`);
     }
 
     return (
         <div className="card-container">
-            <img className="cover" src={large} onClick={() => handleLinkClick(`/info/${english || romaji}`)} />
-            <p className="title" onClick={() => handleLinkClick(`/info/${english || romaji}`)}>{english ? shortenString(english) : shortenString(romaji)}</p>
-            <span className="episodes">{episodes ? episodes + " Episodes" : "-"}</span>
+            <img className="cover" src={large} onClick={() => handleLinkClick(english || romaji)} />
+            <p className="title" onClick={() => handleLinkClick(english || romaji)}>{english ? shortenString(english) : shortenString(romaji)}</p>
+            <span className="episodes-home">{episodes ? episodes + " Episodes" : "-"}</span>
         </div>
     );
 }
