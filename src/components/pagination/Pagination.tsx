@@ -1,4 +1,4 @@
-import ReactPaginate from 'react-paginate'
+import ReactPaginate from "react-paginate";
 
 interface PaginationProps {
     handlePageChange: (pageNumber: { selected: number }) => void;
