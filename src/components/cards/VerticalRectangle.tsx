@@ -23,7 +23,7 @@ function VerticalRectangle({ large, episodes, english, romaji }: CardProps) {
 
     return (
         <div className="card-container">
-            <img className="cover" src={large} onClick={() => handleLinkClick(english || romaji)} />
+            <img className="cover" src={large} onClick={() => handleLinkClick(english || romaji)} alt="cover IMage" />
             <p className="title" onClick={() => handleLinkClick(english || romaji)}>{english ? shortenString(english) : shortenString(romaji)}</p>
             <span className="episodes-home">{episodes ? episodes + " Episodes" : "-"}</span>
         </div>

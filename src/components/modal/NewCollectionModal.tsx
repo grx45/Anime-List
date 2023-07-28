@@ -14,16 +14,17 @@ interface CollectionNameProps {
     coverImage?: string;
     collections: localStorageItems[];
     setCollections: React.Dispatch<React.SetStateAction<localStorageItems[]>>;
+    openFunction: (modalType: string) => void
 }
 
 
-function NewCollectionModal({ collections, setCollections, title, coverImage }: CollectionNameProps) {
+function NewCollectionModal({ collections, setCollections, title, coverImage, openFunction }: CollectionNameProps) {
     const { isSubModalOpen, setIsSubModalOpen } = useSubModal()
     const { setIsModalOpen } = useModal()
 
     function makeNewCollection() {
         setIsModalOpen(false)
-        setIsSubModalOpen(!isSubModalOpen)
+        openFunction("newName")
     }
 
     function addItemToCollection(idx: any,) {
@@ -51,7 +52,7 @@ function NewCollectionModal({ collections, setCollections, title, coverImage }: 
     }
 
     function printCollections() {
-        if (collections) {
+        if (collections.length > 0) {
             return collections.map((val, idx) => {
                 return (
                     <div key={idx} className='add-collection' onClick={() => addItemToCollection(idx)}>

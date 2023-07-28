@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { BsPlus, BsChevronDown, BsChevronUp } from 'react-icons/bs'
 import { AiOutlineCheck } from 'react-icons/ai'
 import { useModal } from '../../context/ModalContext'
+import { useNavigate } from 'react-router-dom'
 
 
 type AccordionProps = {
@@ -13,6 +14,7 @@ function CollectionAccordion({ title, availableIn }: AccordionProps) {
 
     const [isOpen, setIsOpen] = useState(false)
     const { setIsModalOpen, isModalOpen } = useModal()
+    const navigate = useNavigate()
 
     function ShowCollections(): any {
         if (availableIn.length === 0) {
@@ -20,7 +22,7 @@ function CollectionAccordion({ title, availableIn }: AccordionProps) {
         } else {
             return availableIn.map((val, idx) => {
                 return (
-                    <h4 key={idx}>{val}</h4>
+                    <h4 style={{ cursor: 'pointer' }} onClick={() => navigate(`/collections/info/${val}`)} key={idx}>{val}</h4>
                 )
             })
         }
