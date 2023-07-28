@@ -199,6 +199,16 @@ body{
 }
 .Accordion-container.active{
   height: auto;
+  transition: 0.5s ;
+}
+.accordion-content{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.accordion-content h4{
+  border: 1px solid rgba(122, 66, 1, 0.966);
+  padding: 10px;
 }
 
 .button-group{
@@ -352,17 +362,22 @@ body{
 }
 .submit-collection{
   color: white;
-  border: 2px solid rgb(90, 82, 82);
-  background-color: inherit;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  background-color: red;
   border-radius: 10px;
   padding:  12px;
   width: 100%;
   font-size: 20px;
   transition: 0.2s;
+  cursor: pointer;
 }
 .submit-collection:disabled{
+  box-shadow: none;
   background-color: rgba(82, 75, 75, 0.37);
+  border: 2px solid rgb(90, 82, 82);
   color: rgba(255, 255, 255, 0.253);
+  cursor: not-allowed;
   
 }
 /*  */
@@ -385,21 +400,24 @@ body{
 .modal-content{
   display: flex;
   flex-direction: column;
-
+  gap: 15px;
 }
 .add-collection{
   display: flex;
-  
+}
+.add-collection:hover *{
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  cursor: pointer;
 }
 .add-collection p{
   color: rgb(0, 253, 34);
-  cursor: pointer;
+  
   transition: 0.2s;
+  margin-right: 10px;
 }
 .add-collection p:hover{
   color: rgb(0, 253, 34);
-  text-decoration: underline;
-  text-underline-offset: 5px;
 }
 .collection-image-container{
 width: 50px;
@@ -412,6 +430,7 @@ margin-right: 20px;
 .collection-image-container img{
   object-fit: cover;
   width: 100%;
+  height: 100%;
   border-radius: 10px;
 }
 

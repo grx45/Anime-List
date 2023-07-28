@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { FetchSingleAnime } from "../../hooks/useFetchSingleAnime";
 import { setupAnimeData } from "../../utils/animeUtils";
 import { AiOutlineHome, AiOutlineClockCircle, AiFillStar, AiTwotoneCalendar } from 'react-icons/ai'
 import { CgStack } from 'react-icons/cg'
-
 import "../../Animepage.css"
 import Tags from '../../components/tags/Tags'
 import { changeBack } from "../../helpers/AnimePageFunction";
@@ -12,64 +11,52 @@ import CollectionAccordion from "../../components/accordion/CollectionAccordion"
 import NewCollectionModal from "../../components/modal/NewCollectionModal";
 import CollectionName from "../../components/modal/CollectionName"
 
-function InfoPage() {
+interface localStorageItems {
+    CollectionName?: string;
+    CollectionImage?: string;
+    Content: { Name?: string; Image?: string }[];
+}
 
+function InfoPage() {
 
     const params = useParams()
     const title = changeBack(params.title)
     const { loading, error, data } = FetchSingleAnime(title)
     const { name, banner, description, cover, lastUpdatedAt, airingDate, score, id, episodes, source, status, studio, genres } = setupAnimeData(data)
-
-    useEffect(() => {
-        window.scrollTo(0, 0)
-        // addToCollection()
-    }, [])
+    const [collections, setCollections] = useState<localStorageItems[]>([]);
+    const [availableIn, setAvailableIn] = useState<any[]>([])
 
     function printGenres(): any {
-        return genres?.map((val) => {
+        return genres?.map((val, idx) => {
             return (
-                <Tags tag={val} />
+                <Tags key={idx} tag={val} />
             )
         })
     }
-    // function addToCollection(): any {
 
-    //     let x = [
-    //         {
-    //             CollectionName: "collection-1",
-    //             image: "default-image" || "ambil gambar content pertama",
-    //             content: [
-    //                 {
-    //                     name: "jujutsu",
-    //                     image: "asfwfawdawdadd"
-    //                 },
-    //                 {
-    //                     name: "chainsaw",
-    //                     image: "asfwfawdawdadd"
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             CollectionName: "collection-2",
-    //             image: "default-image" || "ambil gambar content pertama",
-    //             content: [
-    //                 {
-    //                     name: "jujutsu",
-    //                     image: "asfwfawdawdadd"
-    //                 },
-    //                 {
-    //                     name: "chainsaw",
-    //                     image: "asfwfawdawdadd"
-    //                 }
-    //             ]
-    //         },
+    function getAvailableIn() {
+        let copyOfLocalStorage = [...collections];
+        let foundArray = [...availableIn];
 
-    //     ]
+        copyOfLocalStorage.forEach((arr) => {
+            let condition = arr.Content.some((item => item.Name === name))
+            if (condition) {
+                foundArray.push(arr?.CollectionName)
+            }
+        })
+        setAvailableIn(foundArray)
+    }
 
-    //     const jsonArray = JSON.stringify(x);
-    //     localStorage.setItem('collections', jsonArray)
+    useEffect(() => {
+        window.scrollTo(0, 0)
 
-    // }
+        const storedCollections = localStorage.getItem("collections");
+        if (storedCollections) {
+            setCollections(JSON.parse(storedCollections));
+        }
+        getAvailableIn()
+
+    }, [])
 
     return (
         <>
@@ -80,8 +67,8 @@ function InfoPage() {
                     <p>Error : {error.message}</p>
                 ) : (
                     <>
-                        <NewCollectionModal />
-                        <CollectionName />
+                        <NewCollectionModal coverImage={cover} title={name} collections={collections} setCollections={setCollections} />
+                        <CollectionName coverImage={cover} title={name} collections={collections} setCollections={setCollections} />
                         <div className="banner-section" style={{ backgroundImage: `url(${banner})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "50% 0%" }}>
                             <div className="gradient-overlay"></div>
                         </div>
@@ -131,7 +118,7 @@ function InfoPage() {
                             </div>
                         </div>
 
-                        <CollectionAccordion title="Add to Collection" />
+                        <CollectionAccordion title="Add to Collection" availableIn={availableIn} />
 
                         <div className="container mobile-section">
                             <div className="genre-list">
@@ -155,8 +142,6 @@ function InfoPage() {
                         <div className="container" style={{ marginTop: "40px", marginBottom: "40px" }} >
                             Additional Info Pending
                         </div>
-
-
                     </>
                 )
             }
