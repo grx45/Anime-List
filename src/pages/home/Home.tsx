@@ -14,7 +14,6 @@ function Home() {
 
     const { loading, error, data: SeasonalAnimeData, refetch } = FetchSeasonalAnime(currentPage, itemsPerPage);
     const media = SeasonalAnimeData?.Page?.media;
-    const pageInfo = SeasonalAnimeData?.Page?.pageInfo;
 
     function SeasonalAnime() {
         if (loading) {
