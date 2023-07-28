@@ -11,4 +11,5 @@ export const shortenString = (inputString: string|undefined): string | null => {
     }
     return null
   };
+
   

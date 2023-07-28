@@ -1,5 +1,6 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState } from "react";
 import SubModalLayout from "./SubModalLayout";
+import defaultImage from "../../assets/blank.png"
 
 interface localStorageItems {
     CollectionName?: string;
@@ -12,23 +13,30 @@ interface CollectionNameProps {
     coverImage?: string;
     collections: localStorageItems[];
     setCollections: React.Dispatch<React.SetStateAction<localStorageItems[]>>;
+    closeFunction: () => void
 }
 
-function CollectionName({ title, coverImage, collections, setCollections }: CollectionNameProps) {
+function NewNameModal({ title, coverImage, collections, setCollections, closeFunction }: CollectionNameProps) {
     const [inputValue, setInputValue] = useState("");
 
     const MAX_LENGTH = 20;
 
     const handleButtonClick = () => {
+
+
         if (inputValue.trim() !== "") {
             const newCollection = {
                 CollectionName: inputValue.trim(),
-                CollectionImage: coverImage,
+                CollectionImage: coverImage || defaultImage,
                 Content: [{ Name: title, Image: coverImage }]
             };
+
             setCollections([...collections, newCollection]);
+
+            let copyOfCollections = [...collections, newCollection]
             setInputValue("");
-            localStorage.setItem("collections", JSON.stringify(collections));
+            localStorage.setItem("collections", JSON.stringify(copyOfCollections));
+            closeFunction()
         }
     };
 
@@ -65,4 +73,4 @@ function CollectionName({ title, coverImage, collections, setCollections }: Coll
     );
 }
 
-export default CollectionName;
+export default NewNameModal;

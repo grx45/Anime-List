@@ -4,12 +4,13 @@ import { FetchSingleAnime } from "../../hooks/useFetchSingleAnime";
 import { setupAnimeData } from "../../utils/animeUtils";
 import { AiOutlineHome, AiOutlineClockCircle, AiFillStar, AiTwotoneCalendar } from 'react-icons/ai'
 import { CgStack } from 'react-icons/cg'
-import "../../Animepage.css"
+import "./Animepage.css"
 import Tags from '../../components/tags/Tags'
 import { changeBack } from "../../helpers/AnimePageFunction";
 import CollectionAccordion from "../../components/accordion/CollectionAccordion";
 import NewCollectionModal from "../../components/modal/NewCollectionModal";
-import CollectionName from "../../components/modal/CollectionName"
+import NewNameModal from "../../components/modal/NewNameModal"
+import { useSubModal } from "../../context/SubModalContext";
 
 interface localStorageItems {
     CollectionName?: string;
@@ -22,9 +23,12 @@ function InfoPage() {
     const params = useParams()
     const title = changeBack(params.title)
     const { loading, error, data } = FetchSingleAnime(title)
-    const { name, banner, description, cover, lastUpdatedAt, airingDate, score, id, episodes, source, status, studio, genres } = setupAnimeData(data)
+    const { name, banner, description, cover, airingDate, score, id, episodes, source, status, studio, genres } = setupAnimeData(data)
     const [collections, setCollections] = useState<localStorageItems[]>([]);
     const [availableIn, setAvailableIn] = useState<any[]>([])
+    const { isSubModalOpen, setIsSubModalOpen } = useSubModal()
+    const [activeModal, setActiveModal] = useState<"newName" | null>(null); // State to track the active modal
+
 
     function printGenres(): any {
         return genres?.map((val, idx) => {
@@ -36,10 +40,11 @@ function InfoPage() {
 
     function getAvailableIn() {
         let copyOfLocalStorage = [...collections];
-        let foundArray = [...availableIn];
+        let foundArray: any = [];
 
         copyOfLocalStorage.forEach((arr) => {
             let condition = arr.Content.some((item => item.Name === name))
+
             if (condition) {
                 foundArray.push(arr?.CollectionName)
             }
@@ -47,16 +52,27 @@ function InfoPage() {
         setAvailableIn(foundArray)
     }
 
+    function openModal(modalType: "newName") {
+        setActiveModal(modalType);
+        setIsSubModalOpen(true);
+    }
+
+    function closeModal() {
+        setActiveModal(null);
+        setIsSubModalOpen(false);
+    }
+
     useEffect(() => {
         window.scrollTo(0, 0)
-
         const storedCollections = localStorage.getItem("collections");
         if (storedCollections) {
             setCollections(JSON.parse(storedCollections));
         }
-        getAvailableIn()
-
     }, [])
+
+    useEffect(() => {
+        getAvailableIn()
+    }, [collections, name])
 
     return (
         <>
@@ -67,8 +83,8 @@ function InfoPage() {
                     <p>Error : {error.message}</p>
                 ) : (
                     <>
-                        <NewCollectionModal coverImage={cover} title={name} collections={collections} setCollections={setCollections} />
-                        <CollectionName coverImage={cover} title={name} collections={collections} setCollections={setCollections} />
+                        <NewCollectionModal coverImage={cover} title={name} collections={collections} setCollections={setCollections} openFunction={() => openModal("newName")} />
+                        <NewNameModal coverImage={cover} title={name} collections={collections} setCollections={setCollections} closeFunction={closeModal} />
                         <div className="banner-section" style={{ backgroundImage: `url(${banner})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "50% 0%" }}>
                             <div className="gradient-overlay"></div>
                         </div>
@@ -121,17 +137,11 @@ function InfoPage() {
                         <CollectionAccordion title="Add to Collection" availableIn={availableIn} />
 
                         <div className="container mobile-section">
+
                             <div className="genre-list">
                                 {printGenres()}
                             </div>
-                            {/* <div className="collection-container" >
-                                <div className="collection-button">
-                                    <BsPlus className="icon" />
-                                    Add to Collections
 
-                                </div>
-
-                            </div> */}
                             {description && (
                                 <div className="description">
                                     <div dangerouslySetInnerHTML={{ __html: description }} />
