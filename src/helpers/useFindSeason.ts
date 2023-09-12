@@ -9,7 +9,7 @@ export const findSeason = (): {season:string,year:number} =>{
     }else if (month >= 6 && month <= 8){
         season = "Summer";
     }else if (month >= 9 && month <= 11){
-        season = "Autumn";
+        season = "Fall";
     }else{
         season = "Winter";
     }
